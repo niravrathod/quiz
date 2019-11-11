@@ -17,7 +17,7 @@ class Dashboard extends CI_Controller {
 	public function index()
 	{
         $session = $this->session->userdata('user_logged');
-        if ($session) 
+        if (!empty($session)) 
         {
             $this->load->view('dashboard');
         }
@@ -29,7 +29,7 @@ class Dashboard extends CI_Controller {
 	public function get_quiz_data()
 	{
 		$session = $this->session->userdata('user_logged');
-        if ($session) 
+        if (!empty($session)) 
         {
         	//get quiz data
         	$quiz_data = array();
@@ -52,7 +52,7 @@ class Dashboard extends CI_Controller {
     public function start_quiz()
     {
         $session = $this->session->userdata('user_logged');
-        if ($session) 
+        if (!empty($session)) 
         {
             $Return = array('result'=>'', 'error'=>'','branches'=>'');
             if($this->input->get('quiz_id')==='') {
@@ -72,6 +72,7 @@ class Dashboard extends CI_Controller {
                 $options_master = $this->mdl_options->get_where_custom('question_id',$question_value->question_id);
                 foreach ($options_master->result() as $key => $option_value) 
                 {
+                    //if it is correct answer then pass index within option_data else don't
                     if ($question_value->option_id ==  $option_value->option_id) 
                     {
                         $option_data[] = array(
