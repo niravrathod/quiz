@@ -40,9 +40,8 @@ class Login extends CI_Controller {
         $username = $this->input->post('username',TRUE);
         $password = sha1($this->input->post('password',TRUE));
         $username_check = $this->mdl_user->get_where_custom('username',$username);
-        $password_check = $this->mdl_user->get_where_custom('password',sha1($password));
-
-        if ((!empty($username_check) && (!empty($password_check)))) 
+        $password_check = $this->mdl_user->get_where_custom('password',$password);
+        if ((!empty($username_check->result()) && (!empty($password_check->result())))) 
         {
             $session_data = array(
                 'user_logged' => TRUE,
